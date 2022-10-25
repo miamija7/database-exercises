@@ -134,3 +134,12 @@ Truncate:
 - it deletes EVERYTHING
 
     TRUNCATE table_name;
+
+
+
+Seeder Script:
+- a script that that fills a table with data
+
+
+
+===================== EXERCISE =====================
