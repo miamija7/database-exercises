@@ -186,9 +186,9 @@ SQL Scripts:
 ===================== EXERCISE =====================
 
 Terminal:
-> chmod 777 albums_migration.sql
-> mysql -u root -p -t < /Users/miaevans/IdeaProjects/database-exercises/src/albums_migration.sql
-> mysql -u root -p
+% chmod 777 albums_migration.sql
+% mysql -u root -p -t < /Users/miaevans/IdeaProjects/database-exercises/src/albums_migration.sql
+% mysql -u root -p
 > SHOW DATABASES;
 > USE codeup_test_db;
 > SHOW TABLES;
