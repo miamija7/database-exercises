@@ -1,0 +1,13 @@
+
+*** mySQL - Basic Statements ***
+
+
+Basic Statements:
+- Use the INSERT statement to create data
+- Use the SELECT statement to read data
+- Use the UPDATE statement to update data
+- Use the DELETE statement to delete data
+- Introduce the WHERE clause
+- Understand MySQL operators
+
+
