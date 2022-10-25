@@ -143,3 +143,10 @@ Seeder Script:
 
 
 ===================== EXERCISE =====================
+
+Terminal:
+%  mysql -u root -p -t < albums_seeder.sql
+% mysql -u root -p
+> SHOW DATABASES;
+>  USE codeup_test_db;
+> SHOW TABLES;
