@@ -10,8 +10,11 @@
 
 
 ## Related Repositories
+
 [Codeup Web Exercises](https://github.com/miamija7/codeup-web-exercises)
 
-[Java Exercises](https://github.com/miamija7/codeup-java-exercises)
+[Codeup Java Exercises](https://github.com/miamija7/codeup-java-exercises)
 
-[Maven Exercises](https://github.com/miamija7/maven-exercises)
+[Codeup Maven Exercises](https://github.com/miamija7/maven-exercises)
+
+[Codeup JUnit Exercises](https://github.com/miamija7/junit-tests)
