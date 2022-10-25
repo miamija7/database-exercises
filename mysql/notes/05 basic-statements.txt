@@ -11,3 +11,126 @@ Basic Statements:
 - Understand MySQL operators
 
 
+
+Summary:
+INSERT          add new rows to a table
+INTO            defines the table we are adding data to
+SELECT          find and return all (or some) rows from a table
+WHERE           narrow down our SELECT
+AS              output arbitrary data
+UPDATE          modify existing data in a table (it will not add new rows)
+DELETE          remove records from a table (*BE CAREFUL*)
+TRUNCATE        remove all the records (*BE CAREFUL*)
+
+
+
+Two Categories of Commands:
+- commands to create and manage the structure of your database
+- commands to manipulate the data in your database
+
+
+
+Data Manipulation Queries:
+- data queries are often called CRUD operations, meaning "Create, Read, Update, and Delete"
+- CRUD is the basic building block for working with data in any system, Ex. web API, a cache server, etc
+- most of the SQL you write in the future will be CRUD commands
+
+
+
+Insert:
+    INSERT INTO table_name (field1, field2, ...)
+    VALUES ('value1', 'value2', ...);
+
+INSERT      tell MySQL that we want to add data
+INTO        defines the table we are adding data to
+            followed by the columns we want to assign values to
+            and then what values we want in those columns
+            (never specify a column that has AUTO_INCREMEN)
+
+    // basic example to add a record to our quotes
+    INSERT INTO quotes (author_first_name, author_last_name, content)
+    VALUES ('Douglas', 'Adams', 'I love deadlines. I love the whooshing noise they make as they go by.');
+
+    // add more than one record
+    INSERT INTO quotes (author_first_name, author_last_name, content)
+    VALUES ('Douglas', 'Adams',    'Time is an illusion. Lunchtime doubly so.'),
+           ('Mark',    'Twain',    'Clothes make the man. Naked people have little or no influence on society.'),
+           ('Kurt',    'Vonnegut', 'The universe is a big place, perhaps the biggest.');
+
+
+
+SQL Quotes:
+\' or ''        Escape quotes
+
+
+
+Select:
+    SELECT column1, column2, ... FROM table_name;
+    SELECT author_last_name, content FROM quotes;
+    SELECT * FROM quotes;
+
+
+
+Where Clause:
+    SELECT column1, column2, ...
+    FROM table_name
+    WHERE column_name = 'value';
+
+    SELECT * FROM quotes WHERE author_last_name = 'Adams';
+    SELECT * FROM quotes WHERE id = 5;
+
+
+
+Operators:
+Operator	                Description
+=	                        Equal
+!= or <>	                Not equal
+<	                        Less than
+>	                        Greater than
+<=	                        Less than or equal to
+>=	                        Greater than or equal to
+BETWEEN value1 AND value2	Greater than or equal to value1 and less than or equal to value2
+
+
+
+Miscellaneous Output:
+- sometimes it may be useful to output arbitrary data from our SQL scripts
+
+    SELECT 'I am output!' AS 'Info';
+
+
+
+Update:
+- It is generally safest to use your primary key column for updates
+- NOTE: If you omit the WHERE clause in an UPDATE statement, the update will apply to all rows on that table
+
+    UPDATE table_name
+    SET column1 = 'value1', column2 = 'value2', ...
+    WHERE columnA = 'valueA';
+
+    UPDATE quotes
+    SET author_first_name = 'Samuel', author_last_name = 'Clemens'
+    WHERE id = 4;
+
+
+
+Delete:
+    DELETE FROM table_name WHERE column_name = 'value';
+    DELETE FROM quotes WHERE id = 3;
+
+Caution: there is no confirmation and there is no going back with DELETE
+1. Always write your WHERE condition first.
+2. Whenever possible, DELETE using the table's primary key.
+
+    -- First:
+    SELECT * FROM quotes WHERE id = 3;
+    -- Convert to:
+    DELETE FROM quotes WHERE id = 3;
+
+
+
+Truncate:
+- has no WHERE clause
+- it deletes EVERYTHING
+
+    TRUNCATE table_name;
