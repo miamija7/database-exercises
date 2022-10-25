@@ -1,0 +1,57 @@
+
+*** mySQL - Creating a Database ***
+
+CREATE DATABASE database_name;                      create a new database
+CREATE DATABASE IF NOT EXISTS database_name;        create a database if it does not already exists
+SHOW DATABASES;                                     list databases
+
+USE database_name;                                  switch to a particular database
+database_name.table_name                            refer to a table or object in a separate database
+SELECT database();                                  currently database selected (NULL = no db selected)
+SHOW CREATE DATABASE database_name;                 find out the query used to create a database
+
+DROP DATABASE database_name;                        remove a database from MySQL
+DROP DATABASE IF EXISTS database_name;              remove a database if it exists
+
+
+RDBMS:
+- Relational Database Management Systems
+
+
+Database vs. Schema:
+- RDBMSs use schemas as a second level of organization within databases
+- they strictly separate databases from each other from the user's perspective
+- in MySQL, "database" and "schema" mean the same thing and can be used interchangeably
+
+
+Application Specific Databases (and Users):
+- developing an application backed by a database, you must decide how to organize that information within your database
+- most web applications can be encapsulated in a single database
+- we will usually pair our application's database with a dedicated user giving full control of just that database
+
+SECURITY: if our application's user is somehow compromised, attackers only have access to the
+data for that application, not to any other database on our server.
+
+NOTE: Most other RDBMSs take this practice one step further, treating users & schemas interchangeably,
+or declaring that a schema is "owned" by a particular user. MySQL is unique in that it completely separates
+the idea of "users" from "databases / schemas"
+
+
+Reserved Words:
+https://dev.mysql.com/doc/mysqld-version-reference/en/keywords-8-0.html
+
+
+Quoting Identifiers:
+``          using any word for a database name, or space characters (DO NOT DO...)
+
+
+
+===================== EXERCISE =====================
+CREATE DATABASE testing1234;
+SHOW DATABASES;
+SHOW CREATE DATABASE testing1234;
+DROP DATABASE testing1234;
+SHOW DATABASES;
+CREATE DATABASE codeup_test_db;
+CREATE USER 'codeup_test_user'@'localhost' IDENTIFIED BY 'password';
+GRANT ALL ON  codeup_test_db.* TO 'codeup_test_user'@'localhost';

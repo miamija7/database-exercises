@@ -1,0 +1,183 @@
+
+*** mySQL - Tables ***
+
+
+Databases:
+- Tables look a lot like a spreadsheet; they break our data down into columns and store individual records in rows
+- a database table has a specific set of columns
+- it is up to us as developers to define what those columns are called and what kind of data they can contain
+
+
+
+Data types:
+- MySQL, and most database systems, are different: they are statically typed
+- create a table, we must specify what data type each column will be
+
+
+
+Numeric Types:
+INT         Any number without a decimal point
+
+FLOAT       A number with decimal values, but which can sometimes be less accurate
+            You can use DOUBLE instead to increase the precision
+
+DECIMAL     (length, precision) A precise decimal number. Decimal columns must be defined with
+            a length and a precision; length is the total number of digits that will be stored
+            for a value, and precision is the number of digits after the decimal place. For example,
+            a column defined as DECIMAL(4,2) would allow four digits total: two before the decimal point
+            and two after. So the values 99.99, 4.50, and -88.10 would be allowed, but not 100.00 or 7.134.
+            Decimal columns are perfect for storing monetary values.
+
+
+
+Unsigned:
+- When we are declaring our numeric columns, we can specify that the values are UNSIGNED
+- This allows us to potentially store larger numbers in a column but only positive values
+- Example: a normal INT column can store numbers from -2,147,483,648 to 2,147,483,647, whereas an
+  INT UNSIGNED column can store 0 to 4,294,967,295.
+
+
+
+Boolean:
+- MySQL has no native support for boolean values
+- it uses a TINYINT data type that goes from -128 to 127 and treats 0 as false and 1 as true
+
+
+
+String Types:
+CHAR(length)        A string with a fixed number of characters, where length can be from 1 to 255, it's
+                    padded with empty space to take up the full size if smaller. CHAR is ideal for values
+                    where you know the length, and it is constant, like a state abbreviation CHAR(2), zip
+                    code CHAR(5), or phone number CHAR(10)
+
+VARCHAR(length)     Strings where the length could vary up to some maximum number. The most common type of
+                    column you will use in your database tables. VARCHAR lengths can go up to 65,535.
+
+TEXT                A large block of characters that can be any length. They can cause serious performance
+                    issues if they are abused. Only use TEXT columns for very large blocks of text, like the
+                    full text of an article, or the pages of a book.
+*** NOTE: use single quotes (') to indicate string values ***
+
+
+
+Date Types:
+DATE        A date value without any time. Typically, MySQL displays dates as YYYY-MM-DD.
+TIME        A time down to the seconds. MySQL uses 24-hour times.
+DATETIME    A combined date and time value. DATETIME does not store any timezone information and will
+            typically display information in the format YYYY-MM-DD HH:MM:SS.
+
+
+
+Null:
+- NULL can be thought of as the absence of value
+- Since NULL values are complex, and because they can lead to inconsistent data, columns can specify NOT NULL
+- NOT NULL prevent NULL from being stored in a particular column and lead to more predictable results
+
+
+
+Creating Tables:
+
+    CREATE TABLE table_name (
+        column1_name data_type,
+        column2_name data_type,
+        ...
+    );
+
+    CREATE TABLE quotes (
+        author_first_name VARCHAR(50),
+        author_last_name  VARCHAR(100) NOT NULL,
+        content TEXT NOT NULL
+    );
+
+    CREATE TABLE quotes (
+        id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+        author_first_name VARCHAR(50),
+        author_last_name  VARCHAR(100) NOT NULL,
+        content TEXT NOT NULL,
+        PRIMARY KEY (id)
+    );
+
+
+
+Primary Keys:
+- primary key is a guaranteed way to uniquely identify a single row in a table
+
+A primary key is a special type of column with the following rules:
+    1. Each value must be unique.
+    2. They cannot be NULL.
+    3. There can only be one primary key in a table.
+
+- Most of the time, it is perfectly reasonable to let the database server manage your primary key values for you
+
+
+
+Default Values:
+
+    CREATE TABLE quotes (
+        id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+        author_first_name VARCHAR(50) DEFAULT 'NONE',
+        author_last_name  VARCHAR(100) NOT NULL,
+        content TEXT NOT NULL,
+        PRIMARY KEY (id)
+    );
+
+
+
+Showing Tables:
+SHOW TABLES;
++--------------------------+
+| Tables_in_codeup_test_db |
++--------------------------+
+| quotes                   |
++--------------------------+
+1 row in set (0.00 sec)
+
+
+
+Describing Tables:
+- MySQL uses EXPLAIN and DESCRIBE interchangeably
+- we use DESCRIBE when we want to inspect a table, and EXPLAIN when we want to analyze a query
+- see the --> SCHEMA <--
+
+DESCRIBE quotes;
++-------------------+------------------+------+-----+---------+----------------+
+| Field             | Type             | Null | Key | Default | Extra          |
++-------------------+------------------+------+-----+---------+----------------+
+| id                | int(10) unsigned | NO   | PRI | NULL    | auto_increment |
+| author_first_name | varchar(50)      | YES  |     | NULL    |                |
+| author_last_name  | varchar(100)     | NO   |     | NULL    |                |
+| content           | text             | NO   |     | NULL    |                |
++-------------------+------------------+------+-----+---------+----------------+
+4 rows in set (0.00 sec)
+
+
+
+Creation Command:
+SHOW CREATE TABLE quotes\G;
+***** 1. row ******* Table: quotes Create Table: CREATE TABLE quotes ( id int(10)
+unsigned NOT NULL AUTO_INCREMENT, author_first_name varchar(50) COLLATE
+utf8mb4_general_ci DEFAULT 'NONE', author_last_name varchar(100) COLLATE
+utf8mb4_general_ci NOT NULL, content text COLLATE utf8mb4_general_ci NOT NULL,
+PRIMARY KEY (id) ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
+COLLATE=utf8mb4_general_ci 1 row in set (0.00 sec)
+
+
+
+Dropping Tables:
+    DROP TABLE quotes;
+
+    DROP TABLE IF EXISTS quotes;
+
+    CREATE TABLE IF NOT EXISTS quotes (
+        ...
+    );
+
+
+
+SQL Scripts:
+- create a file with the extension .sql
+- add comments in your SQL script with two dashes: --
+- Everything on a line after -- is a comment and will not be executed
+
+         mysql -u USERNAME -p -t < filename.sql
+

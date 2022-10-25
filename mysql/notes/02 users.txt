@@ -1,0 +1,64 @@
+
+*** mySQL - USERS ***
+
+Database Users:
+- MySQL server is a multi-user system
+
+SELECT current_user;                                            determine the user we are currently connected as
+SELECT user, host FROM mysql.user;                              usernames and hosts connection
+CREATE USER 'name'@'localhost/ip' IDENTIFIED BY 'password';     create a user and give password (ip = remote ip address)
+
+
+Privileges:
+- Creating a user is only half of the process, a user has no "privileges"
+- it does not have the permission to do anything within the MySQL server
+
+GRANT ALL ON *.* TO 'name'@'localhost';                     grant all privileges on all databases and tables to a user
+GRANT SELECT ON *.* TO 'name'@'localhost';                  grant read-only privileges on all databases and tables to a user
+GRANT ALL ON *.* TO 'name'@'localhost' WITH GRANT OPTION;   grant user all privileges + ability to grant other users
+SHOW GRANTS for 'username'@'hostname';                      find out the current privileges of a user
+DROP USER 'sally'@'localhost';                              removing a user (Be extremely careful with this command!)
+
+
+// more privilege assignment examples
+GRANT SELECT, INSERT, UPDATE, DELETE ON sally_db.sallys_table TO 'sally'@'localhost';
+GRANT CREATE, ALTER, INSERT, DROP ON office_db.* TO 'office_user'@'localhost';
+
+
+
+
+
+
+
+===================== EXERCISE =====================
+mySQL
+
+> SELECT current_user;
+    +----------------+
+    | current_user   |
+    +----------------+
+    | root@localhost |
+    +----------------+
+    1 row in set (0.02 sec)
+
+    // NOTE: localhost is 127.0.0.1
+
+
+> SELECT user, host FROM mysql.user;
+    +------------------+-----------+
+    | user             | host      |
+    +------------------+-----------+
+    | mysql.infoschema | localhost |
+    | mysql.session    | localhost |
+    | mysql.sys        | localhost |
+    | root             | localhost |
+    +------------------+-----------+
+    4 rows in set (0.03 sec)
+
+> SHOW GRANTS for 'root'@'hostname';
+> SHOW GRANTS for 'root'@'hostname'\G
+> CREATE USER 'chicken'@'localhost' IDENTIFIED BY 'pwd';
+> SELECT user, host FROM mysql.user;
+> DROP USER 'chicken'@'localhost';
+> CREATE USER 'miaevans'@'localhost' IDENTIFIED BY 'pwd';
+> GRANT ALL ON *.* TO 'miaevans'@'localhost' WITH GRANT OPTION;
