@@ -5,4 +5,13 @@ Installation
 1. https://github.com/gocodeup/test_db
     - clone to local machine
 2. cd to repo and run:
-    mysql -u root -p < employees.sql
+    % mysql -u root -p < employees.sql
+    % mysql -u root -p -t < test_employees_md5.sql
+    % mysql -u root -p -t < test_employees_sha.sql
+    % mysql -u root -p
+    > SHOW DATABASES;
+    > USE employees;
+    > SHOW TABLES;
+    > SELECT * FROM employees;
+
+
