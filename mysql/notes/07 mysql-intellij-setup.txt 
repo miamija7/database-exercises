@@ -14,10 +14,11 @@ IntelliJ
     Port: 3306
     Database:
     User: root
-    Password: codeup (or your root password)
+    Password: (your root password)
     No database selected
     (NOTE: leave the "Database" field blank so you can see all)
     serverTimezone: UTC
+    schemas -> [X] All Schemas
 4. Click Test Connection and save if successful (update drivers/analyze exceptions)
 5. You should be dropped into the db console
 
