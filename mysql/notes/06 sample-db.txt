@@ -1,0 +1,8 @@
+
+*** mySQL - Setting Up Sample DB ***
+
+Installation
+1. https://github.com/gocodeup/test_db
+    - clone to local machine
+2. cd to repo and run:
+    mysql -u root -p < employees.sql
