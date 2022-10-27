@@ -1,0 +1,33 @@
+
+*** mySQL - MySQL Console Setup w/ IntelliJ ***
+
+
+IntelliJ features a database tool window that allows us to interact with our databases through IntelliJ
+The database console tool allows us to connect to available databases and execute queries on the fly.
+
+
+Setting up The Database Connection:
+IntelliJ
+1. View -> Tool Windows -> Database -> '+' -> Data Source -> MySQL
+2. Might require server version: MySQL 8.x.x
+3.  Host: localhost
+    Port: 3306
+    Database:
+    User: root
+    Password: codeup (or your root password)
+    No database selected
+    (NOTE: leave the "Database" field blank so you can see all)
+    serverTimezone: UTC
+4. Click Test Connection and save if successful (update drivers/analyze exceptions)
+5. You should be dropped into the db console
+
+
+Accessing the Database Console:
+1. Open the database tool window
+2. ^control + click -> choose 'open console' or click icon near the top (the dialect of SQL, select MySQL)
+3. command + enter in console to run one or more queries
+
+
+===================== EXERCISE =====================
+- Expand the @localhost then expand employees_db
+
