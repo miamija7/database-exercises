@@ -31,4 +31,7 @@ Accessing the Database Console:
 
 ===================== EXERCISE =====================
 - Expand the @localhost then expand employees_db
-
+- QUERIES:
+    DESCRIBE employees.departments;
+    USE employees;
+    SELECT * FROM departments;
