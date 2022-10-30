@@ -1,0 +1,64 @@
+
+*** MySQL - Clauses ***
+
+Clauses: further stipulations added to our queries that determine which rows are targeted
+
+
+WHERE:
+- condition(s) for rows to be selected
+- evaluates to true
+- default is ALL rows if WHERE is not present
+
+    // WHERE
+    SELECT * FROM employees WHERE hire_date = '1985-01-01';
+
+    // WHERE + LIKE + %(wildcards)
+    SELECT first_name
+    FROM employees
+    WHERE first_name LIKE '%sus%';
+
+    // DISTINCT: no duplicate values
+    SELECT DISTINCT first_name
+    FROM employees
+    WHERE first_name LIKE '%sus%';
+
+    // WHERE + IN
+    SELECT emp_no, first_name, last_name
+    FROM employees
+    WHERE last_name IN ('Herber', 'Dredge', 'Lipner', 'Baek');
+
+    // WHERE + comparison operators
+    <   >   =   >=  <=
+    SELECT emp_no, first_name, last_name
+    FROM employees
+    WHERE emp_no <= 10026;
+
+    // WHERE + IS NULL / IS NOT NULL
+    SELECT emp_no, title
+    FROM titles
+    WHERE to_date IS NOT NULL;
+
+    // chain an IN clause with any of the clauses, using AND and OR
+    SELECT emp_no, first_name, last_name
+    FROM employees
+    WHERE last_name IN ('Herber','Baek')
+      AND emp_no < 20000;
+
+    // chain as many of these as we please
+    SELECT emp_no, first_name, last_name
+    FROM employees
+    WHERE emp_no < 20000
+      AND last_name IN ('Herber','Baek')
+       OR first_name = 'Shridhar';
+
+    // force evaluation grouping using ()
+    SELECT emp_no, first_name, last_name
+    FROM employees
+    WHERE emp_no < 20000
+      AND (
+          last_name IN ('Herber','Baek')
+       OR first_name = 'Shridhar'
+    );
+
+
+===================== EXERCISE =====================
