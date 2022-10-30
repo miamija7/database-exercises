@@ -1,0 +1,113 @@
+
+*** MySQL - Relationships ***
+
+The R in RDBMS stands for Relational.
+MySQL offers us a lot of power through its ability to relate data from different tables.
+We use SQL to manage data across several tables.
+
+
+Indexes (Indices):
+- optimize queries and ensure integrity of data
+
+Indexes are used to find rows with specific column values quickly. Without an index, MySQL must begin with the
+first row and then read through the entire table to find the relevant rows. The larger the table, the more this
+costs. If the table has an index for the columns in question, MySQL can quickly determine the position to seek
+to in the middle of the data file without having to look at all the data. If a table has 1,000 rows, this is at
+least 100 times faster than reading sequentially. If you need to access most of the rows, it is faster to read
+sequentially, because this minimizes disk seeks.
+
+
+Using Indexes:
+- a primary key is the unique identifier for each row
+- ability to easily reference the data in a row
+- MySQL will make sure there are never duplicates
+
+
+Primary Keys:
+The primary key for a table represents the column or set of columns that you use in your most vital queries.
+It has an associated index, for fast query performance. Query performance benefits from the NOT NULL optimization,
+because it cannot include any NULL values.
+
+- Typically we add the PRIMARY KEY index on our id column, along with AUTO_INCREMENT.
+
+    // performing queries on the id will be very fast
+    CREATE TABLE quotes (
+        id INT NOT NULL AUTO_INCREMENT,
+        author VARCHAR(50) NOT NULL,
+        content VARCHAR(240) NOT NULL,
+        PRIMARY KEY (id)
+    );
+
+
+Unique:
+- Optimization is the primary focus of indexes
+- we can use indexes to ensure uniqueness and create relationships
+- UNIQUE indexes work very similar to primary keys
+- unique indexes are not limited to 1 per table
+- add a UNIQUE constraint on a column to make sure there are no duplicates
+
+    ALTER TABLE quotes
+    ADD UNIQUE (content);
+
+    mysql> DESCRIBE quotes;
+    +---------+--------------+------+-----+---------+----------------+
+    | Field   | Type         | Null | Key | Default | Extra          |
+    +---------+--------------+------+-----+---------+----------------+
+    | id      | int(11)      | NO   | PRI | NULL    | auto_increment |
+    | content | varchar(240) | NO   | UNI | NULL    |                |
+    | author  | varchar(50)  | NO   |     | NULL    |                |
+    +---------+--------------+------+-----+---------+----------------+
+    3 rows in set (0.00 sec)
+
+
+Foreign Keys:
+- foreign keys relate tables that will be used in joins
+
+If a table has many columns, and you query different combinations of columns, it might be efficient to split
+the less-frequently used data into separate tables with a few columns each, and relate them back to the main
+table by duplicating the numeric ID column from the main table. That way, each small table can have a primary
+key for fast lookups of its data, and you can query just the set of columns that you need using a join operation.
+
+
+Multiple-Column Indexes:
+- MySQL can create composite indexes (that is, indexes on multiple columns).
+- An index may consist of up to 16 columns.
+
+    CREATE TABLE authors (
+        id INT NOT NULL AUTO_INCREMENT,
+        first_name VARCHAR(100) NOT NULL,
+        last_name VARCHAR(100) NOT NULL,
+        PRIMARY KEY (id),
+        UNIQUE (first_name, last_name)
+    );
+
+- this creates a new table named authors
+- the unique key constraint is on the combined values of first_name and last_name
+
+
+===================== EXERCISE =====================
+
+USE employees;
+
+DESCRIBE departments;
+DESCRIBE dept_emp;
+DESCRIBE dept_manager;
+DESCRIBE employees;
+DESCRIBE salaries;
+DESCRIBE titles;
+
+
+USE codeup_test_db;
+
+CREATE TABLE name_artist (
+    id INT NOT NULL AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
+    artist VARCHAR(50) NOT NULL,
+    PRIMARY KEY (id),
+    UNIQUE (name, artist)
+);
+
+
+
+
+
