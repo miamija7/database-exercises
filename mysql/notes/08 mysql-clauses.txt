@@ -6,6 +6,7 @@ Clauses: further stipulations added to our queries that determine which rows are
 
 ===================== WHERE =====================
 
+WHERE clause:
 - condition(s) for rows to be selected
 - evaluates to true
 - default is ALL rows if WHERE is not present
@@ -64,7 +65,7 @@ Clauses: further stipulations added to our queries that determine which rows are
 
 ===================== ORDER BY =====================
 
-ORDER BY:
+ORDER BY clause:
 - specify the order in which we wish to view our data
 - ORDER BY and GROUP BY clauses using column names, column aliases, or column positions
 - column positions are ints starting at 1
@@ -86,3 +87,26 @@ ORDER BY:
     SELECT first_name, last_name
     FROM employees
     ORDER BY last_name DESC, first_name ASC;
+
+
+===================== LIMIT =====================
+
+LIMIT clause:
+- limit the number of results returned to a number or range you specify
+- LIMIT and OFFSET are commonly used for pagination
+- think of your results as batches, sets, or pages
+
+    SELECT columns FROM table LIMIT count [OFFSET count];
+
+    // LIMIT
+    SELECT emp_no, first_name, last_name
+    FROM employees
+    WHERE first_name LIKE 'M%'
+    LIMIT 10;
+
+    // LIMIT + OFFSET = which row to start
+    SELECT emp_no, first_name, last_name
+    FROM employees
+    WHERE first_name LIKE 'M%'
+    LIMIT 25 OFFSET 50;
+
