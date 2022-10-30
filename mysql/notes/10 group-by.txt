@@ -32,6 +32,12 @@ Aggregate Functions:
 - aggregate functions works with data across all the rows in our result
 - https://dev.mysql.com/doc/refman/8.0/en/aggregate-functions.html
 
+MIN()           get maximum
+MAX()           get minimum
+AVG()           get average
+SUM()           get sum
+STDDEV()        statistical analysis
+VARIANCE()      statistical analysis
 COUNT()         get the number of non-null expression values in a result
 
     COUNT(*)
@@ -54,3 +60,9 @@ Using GROUP BY with Aggregate Functions:
     FROM employees
     WHERE first_name NOT LIKE '%a%'
     GROUP BY first_name;
+
+    SELECT hire_date, COUNT(*)
+    FROM employees
+    GROUP BY hire_date
+    ORDER BY COUNT(*) DESC
+    LIMIT 10;
