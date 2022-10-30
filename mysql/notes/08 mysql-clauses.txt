@@ -4,7 +4,8 @@
 Clauses: further stipulations added to our queries that determine which rows are targeted
 
 
-WHERE:
+===================== WHERE =====================
+
 - condition(s) for rows to be selected
 - evaluates to true
 - default is ALL rows if WHERE is not present
@@ -61,4 +62,27 @@ WHERE:
     );
 
 
-===================== EXERCISE =====================
+===================== ORDER BY =====================
+
+ORDER BY:
+- specify the order in which we wish to view our data
+- ORDER BY and GROUP BY clauses using column names, column aliases, or column positions
+- column positions are ints starting at 1
+- chain together column names, column aliases, or column positions
+
+    SELECT column FROM table ORDER BY column_name [ASC|DESC];
+
+    // ASCENDING (default)
+    SELECT first_name, last_name
+    FROM employees
+    ORDER BY last_name ASC;
+
+    // DESCENDING
+    SELECT first_name, last_name
+    FROM employees
+    ORDER BY last_name DESC;
+
+    // Chaining ORDER BY clause
+    SELECT first_name, last_name
+    FROM employees
+    ORDER BY last_name DESC, first_name ASC;
