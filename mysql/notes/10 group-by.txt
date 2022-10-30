@@ -1,0 +1,56 @@
+
+*** MySQL - Group By ***
+
+GROUP BY clause:
+- remove duplicates
+- group based on data in columns
+- combine GROUP BY with aggregate functions
+- Any column(s) that appear in the SELECT should also be in the GROUP BY clause.
+
+    // syntax
+
+    SELECT column FROM table GROUP BY column_name;
+    ----------------------------------------------
+    // GROUP BY returns only the unique occurrences of the column specified
+
+    SELECT DISTINCT first_name
+    FROM employees;
+
+    SELECT first_name
+    FROM employees
+    GROUP BY first_name;
+    ----------------------------------------------
+    // GROUP BY multiple columns
+
+    SELECT last_name, first_name
+    FROM employees
+    GROUP BY last_name, first_name;
+
+
+
+Aggregate Functions:
+- aggregate functions works with data across all the rows in our result
+- https://dev.mysql.com/doc/refman/8.0/en/aggregate-functions.html
+
+COUNT()         get the number of non-null expression values in a result
+
+    COUNT(*)
+
+    SELECT COUNT(*) FROM employees;
+
+    // count all first names that do not have an 'a'
+    SELECT COUNT(first_name)
+    FROM employees
+    WHERE first_name NOT LIKE '%a%';
+
+
+
+Using GROUP BY with Aggregate Functions:
+- produce more meaningful results
+- find out how many unique first names do not contain an 'a'
+- combine this with the aggregate COUNT function to find how many employees have each unique last nam
+
+    SELECT first_name, COUNT(first_name)
+    FROM employees
+    WHERE first_name NOT LIKE '%a%'
+    GROUP BY first_name;
