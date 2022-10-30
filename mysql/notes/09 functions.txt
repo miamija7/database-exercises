@@ -1,0 +1,33 @@
+
+*** MySQL - Functions ***
+
+Functions:
+- MySQL has several built-in functions that we can use in our queries
+- There is also the ability to create user-defined functions; however, this is a more advanced topic
+
+
+Using MySQL Functions:
+https://dev.mysql.com/doc/refman/8.0/en/func-op-summary-ref.html
+
+
+String Functions/Date and Time Functions:
+CONCAT()            takes in any number of strings or column names and concatenates them all together
+NOW()               get current timestamp => CURRENT_TIMESTAMP()
+DAY()               get day of the month for date, 1 to 31, or 0 => DAYOFMONTH()
+MONTH()             get month from date
+YEAR()              get year from date
+CURDATE()           current date: YYYY-MM-DD
+CURTIME()           current time: HH:MM:SS
+UNIX_TIMESTAMP()    the number of seconds since midnight January 1st, 1970
+DATEDIFF()          get number of days between dates
+
+
+    | SELECT *
+    | FROM employees
+    | WHERE year(birth_date) BETWEEN 1950 AND 1959
+    |   AND month(birth_date) = 7
+    |   AND day(birth_date) = 4;
+
+
+Mathematical Functions:
+- https://dev.mysql.com/doc/refman/8.0/en/numeric-functions.html
