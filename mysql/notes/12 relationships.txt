@@ -99,13 +99,16 @@ DESCRIBE titles;
 
 USE codeup_test_db;
 
-CREATE TABLE name_artist (
-    id INT NOT NULL AUTO_INCREMENT,
-    name VARCHAR(255) NOT NULL,
-    artist VARCHAR(50) NOT NULL,
-    PRIMARY KEY (id),
-    UNIQUE (name, artist)
-);
+ALTER TABLE albums
+ADD UNIQUE (name, artist);
+
+INSERT INTO albums (artist, name)
+VALUES ('Adele', '21');
+#ERROR: [23000][1062] Duplicate entry '21-Adele' for key 'albums.name'
+
+DESCRIBE albums;
+
+SHOW TABLES;
 
 
 
