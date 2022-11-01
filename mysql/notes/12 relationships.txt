@@ -6,6 +6,10 @@ MySQL offers us a lot of power through its ability to relate data from different
 We use SQL to manage data across several tables.
 
 
+
+===================== INDEXES =====================
+
+
 Indexes (Indices):
 - optimize queries and ensure integrity of data
 
@@ -17,10 +21,12 @@ least 100 times faster than reading sequentially. If you need to access most of 
 sequentially, because this minimizes disk seeks.
 
 
+
 Using Indexes:
 - a primary key is the unique identifier for each row
 - ability to easily reference the data in a row
 - MySQL will make sure there are never duplicates
+
 
 
 Primary Keys:
@@ -37,6 +43,7 @@ because it cannot include any NULL values.
         content VARCHAR(240) NOT NULL,
         PRIMARY KEY (id)
     );
+
 
 
 Unique:
@@ -60,6 +67,7 @@ Unique:
     3 rows in set (0.00 sec)
 
 
+
 Foreign Keys:
 - foreign keys relate tables that will be used in joins
 
@@ -67,6 +75,7 @@ If a table has many columns, and you query different combinations of columns, it
 the less-frequently used data into separate tables with a few columns each, and relate them back to the main
 table by duplicating the numeric ID column from the main table. That way, each small table can have a primary
 key for fast lookups of its data, and you can query just the set of columns that you need using a join operation.
+
 
 
 Multiple-Column Indexes:
@@ -85,7 +94,7 @@ Multiple-Column Indexes:
 - the unique key constraint is on the combined values of first_name and last_name
 
 
-===================== EXERCISE =====================
+===================== Indexes EXERCISE =====================
 
 USE employees;
 
@@ -111,6 +120,167 @@ DESCRIBE albums;
 SHOW TABLES;
 
 
+===================== JOINS =====================
+
+JOIN:
+- JOIN tables, usually based on a foreign key relationship
+- obtain query results from more than one table in a single query
+- types of joins:
+    + JOIN, a.k.a INNER JOIN
+    + LEFT JOIN
+    + RIGHT JOIN
 
 
 
+JOIN Syntax:
+- JOIN describes the table that will be joining the query
+- ON describes the relationship
+
+    SELECT columns
+    FROM table_a as A
+    JOIN table_b as B ON A.id = B.fk_id;
+
+- table_a is the left table of the join
+- table_b is the right table of the join
+
+
+
+JOIN Example DB:
+
+    CREATE TABLE roles (
+      id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+      name VARCHAR(100) NOT NULL,
+      PRIMARY KEY (id)
+    );
+
+    CREATE TABLE users (
+      id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+      name VARCHAR(100) NOT NULL,
+      email VARCHAR(100) NOT NULL,
+      role_id INT UNSIGNED DEFAULT NULL,
+      PRIMARY KEY (id),
+      FOREIGN KEY (role_id) REFERENCES roles (id)
+    );
+
+    INSERT INTO roles (name) VALUES ('admin');
+    INSERT INTO roles (name) VALUES ('author');
+    INSERT INTO roles (name) VALUES ('reviewer');
+    INSERT INTO roles (name) VALUES ('commenter');
+
+    INSERT INTO users (name, email, role_id) VALUES
+    ('bob', 'bob@example.com', 1),
+    ('joe', 'joe@example.com', 2),
+    ('sally', 'sally@example.com', 3),
+    ('adam', 'adam@example.com', 3),
+    ('jane', 'jane@example.com', null),
+    ('mike', 'mike@example.com', null);
+
+
+
+Join / Inner Join:
+
+    SELECT users.name as user_name, roles.name as role_name
+    FROM users
+    JOIN roles ON users.role_id = roles.id;
+
+    +-----------+-----------+
+    | user_name | role_name |
+    +-----------+-----------+
+    | bob       | admin     |
+    | joe       | author    |
+    | sally     | reviewer  |
+    | adam      | reviewer  |
+    +-----------+-----------+
+    4 rows in set (0.00 sec)
+
+
+
+Left Join:
+- retrieve all the records from the left table, regardless of a corresponding record in the right table
+
+    SELECT users.name AS user_name, roles.name AS role_name
+    FROM users
+    LEFT JOIN roles ON users.role_id = roles.id;
+
+    +-----------+-----------+
+    | user_name | role_name |
+    +-----------+-----------+
+    | bob       | admin     |
+    | joe       | author    |
+    | sally     | reviewer  |
+    | adam      | reviewer  |
+    | jane      | NULL      |
+    | mike      | NULL      |
+    +-----------+-----------+
+    6 rows in set (0.00 sec)
+
+
+
+Right Join:
+- retrieve all the records from the right table, regardless of a corresponding record in the left table
+- not as common as LEFT JOIN
+- RIGHT JOIN can be rewritten as a LEFT JOIN by changing the order of the tables in the query
+
+    SELECT users.name AS user_name, roles.name AS role_name
+    FROM users
+    RIGHT JOIN roles ON users.role_id = roles.id;
+
+    +-----------+-----------+
+    | user_name | role_name |
+    +-----------+-----------+
+    | bob       | admin     |
+    | joe       | author    |
+    | sally     | reviewer  |
+    | adam      | reviewer  |
+    | NULL      | commenter |
+    +-----------+-----------+
+    5 rows in set (0.00 sec)
+
+
+
+Associative Tables and Joins:
+- associative table / join table
+- a table which creates associations between tables
+
+    SELECT CONCAT(e.first_name, ' ', e.last_name) AS full_name, d.dept_name
+    FROM employees as e
+    JOIN dept_emp as de
+      ON de.emp_no = e.emp_no
+    JOIN departments as d
+      ON d.dept_no = de.dept_no
+    WHERE de.to_date = '9999-01-01' AND e.emp_no = 10001;
+
+
+===================== Joins EXERCISE =====================
+
+CREATE DATABASE join_test_db;
+
+USE join_test_db;
+
+CREATE TABLE roles (
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  name VARCHAR(100) NOT NULL,
+  PRIMARY KEY (id)
+);
+
+CREATE TABLE users (
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  name VARCHAR(100) NOT NULL,
+  email VARCHAR(100) NOT NULL,
+  role_id INT UNSIGNED DEFAULT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (role_id) REFERENCES roles (id)
+);
+
+INSERT INTO roles (name) VALUES ('admin');
+INSERT INTO roles (name) VALUES ('author');
+INSERT INTO roles (name) VALUES ('reviewer');
+INSERT INTO roles (name) VALUES ('commenter');
+
+INSERT INTO users (name, email, role_id) VALUES
+('bob', 'bob@example.com', 1),
+('joe', 'joe@example.com', 2),
+('sally', 'sally@example.com', 3),
+('adam', 'adam@example.com', 3),
+('jane', 'jane@example.com', null),
+('mike', 'mike@example.com', null);
