@@ -42,32 +42,3 @@ WHERE emp_no in (
     FROM dept_manager
     WHERE to_date > now()
 ) AND gender = "F";
-
-
-SELECT emp_no
-FROM salaries s
-    JOIN employees e using(emp_no)
-WHERE to_date > now() AND  salary > (select avg(salary) from salaries) ;
-
-
-SELECT max(salary) FROM salaries WHERE to_date > now();
-
-SELECT stddev(salary) FROM salaries WHERE to_date > now();
-
-SELECT count(*)
-FROM salaries
-WHERE to_date > now() AND salary > (
-    (SELECT max(salary) FROM salaries WHERE to_date > now()) -
-    (SELECT std(salary) FROM salaries WHERE to_date > now())
-);
-
-SELECT count(*)
-FROM salaries
-WHERE to_date > now();
-
-SELECT ((SELECT count(*)
-FROM salaries
-WHERE to_date > now()
-AND salary > ((SELECT max(salary) FROM salaries WHERE to_date > now()) - (SELECT std(salary) FROM salaries WHERE to_date > now())))/(SELECT count(*)
-FROM salaries
-WHERE to_date > now())) * 100 as "percentage of salaries within 1 Stdev of Max";
